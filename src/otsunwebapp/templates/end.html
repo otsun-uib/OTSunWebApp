@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Thank you for using our web-app! </h2>
+      We will send you a link to your results when they are ready.
+    <br>
+    Meanwhile, you can check the status of the computation in this
+    <a href="{{ url_for('status', identifier=identifier) }}">link</a>.
+{% endblock %}

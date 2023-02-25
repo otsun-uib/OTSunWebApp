@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Material creator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  </head>
+  <body>
+  <div class="container">
+    <h1>Creator of Materials</h1>
+      <form method=post enctype=multipart/form-data>
+          <div id="menus">
+          </div>
+      </form>
+ </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<script type="application/javascript">
+
+    var choice_submit = `
+    <div class="menu"><button type="submit" class="btn btn-primary">Submit</button></div>
+    `;
+
+    var choice1 = `
+          <div class="menu">
+          <div class="form-group">
+            <label for="name">Identifier of material to create</label>
+            <input type="text" required="true" class="form-control" id="name" placeholder="Name" name="name">
+          </div>
+          <div class="form-group">
+              <label for="choice1">Kind of material</label><br>
+              <select id="choice1" name="choice1" class="form-control">
+                  <option selected disabled>Choose one</option>
+                  <option value="choice_volume">Volume</option>
+                  <option value="choice_surface">Surface</option>
+              </select>
+          </div>
+          </div>
+    `;
+
+    var choice_volume = `
+          <div class="menu">
+          <div class="form-group">
+               <label for="choice_volume">Kind of volume material</label><br>
+              <select id="choice_volume" name="choice_volume" class="form-control">
+                  <option selected disabled>Choose one</option>
+                  <option value="choice_constant_ior">Constant refractive index</option>
+                  <option value="choice_variable_ior">Variable refractive index</option>
+                  <option value="choice_PV_volume">PV material</option>
+                  <option value="choice_polarized_thin_film">Thin film material</option>
+              </select>
+          </div>
+          </div>
+    `;
+
+    var choice_constant_ior = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="ior">Index of refraction</label>
+            <input type="number" step="any" required="true" class="form-control" id="ior" placeholder="Parameter" name="ior">
+            <label for="at_co">Attenuation coefficient [mm-1]</label>
+            <input type="number" step="any" required="true" class="form-control" id="at_co" placeholder="Parameter" name="at_co">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="constant_ior">
+     `+choice_submit;
+
+    var choice_variable_ior = `
+    <div class="menu">
+        <div class="form-group">
+            <label for="ior_file">Refractive index data:</label>
+            <input type="file" required="true" class="form-control-file" id="ior_file" name="ior_file">
+        </div>
+    </div>
+        <input type="hidden" required="true" name="kind_of_material" value="variable_ior">
+     `+choice_submit;
+
+    var choice_PV_volume = `
+    <div class="menu">
+        <div class="form-group">
+            <label for="PV_file">PV data:</label>
+            <input type="file" required="true" class="form-control-file" id="PV_file" name="PV_file">
+        </div>
+    </div>
+        <input type="hidden" name="kind_of_material" value="PV_volume">
+     `+choice_submit;
+
+    var choice_polarized_thin_film = `
+    <div class="menu">
+        <div class="form-group">
+            <label for="thin_film_file">Thin film data:</label>
+            <input type="file" required="true" class="form-control-file" id="thin_film_file" name="thin_film_file">
+        </div>
+        <div class="form-group">
+            <label for="front_file">Refractive index data for front material (leave it empty if it is Vacuum):</label>
+            <input type="file" class="form-control-file" id="front_file" name="front_file">
+        </div>
+        <div class="form-group">
+            <label for="back_file">Refractive index data for back material (leave it empty if it is Vacuum):</label>
+            <input type="file" class="form-control-file" id="back_file" name="back_file">
+        </div>
+    </div>
+        <input type="hidden" name="kind_of_material" value="polarized_thin_film">
+     `+choice_submit;
+
+    var choice_surface = `
+          <div class="menu">
+          <div class="form-group">
+               <label for="choice_surface">Kind of surface</label><br>
+              <select id="choice_surface" name="choice_surface" class="form-control">
+                  <option selected disabled>Choose one</option>
+                  <option value="choice_opaque_simple_layer">Opaque simple layer</option>
+                  <option value="choice_absorber_simple_layer">Absorber simple layer</option>
+                  <option value="choice_absorber_lambertian_layer">Absorber lambertian layer</option>
+                  <option value="choice_absorber_TW_model_layer">Absorber TW model layer</option>
+                  <option value="choice_polarized_coating_absorber_layer">Absorber polarized coating layer</option>
+                  <option value="choice_reflector_specular_layer">Reflector specular layer</option>
+                  <option value="choice_reflector_lambertian_layer">Reflector lambertian layer</option>
+                  <option value="choice_metallic_specular_layer">Reflector specular metallic layer</option>
+                  <option value="choice_metallic_lambertian_layer">Reflector lambertian metallic layer</option>
+                  <option value="choice_polarized_coating_reflector_layer">Reflector polarized coating layer</option>
+                  <option value="choice_transparent_simple_layer">Transparent simple layer</option>
+                  <option value="choice_polarized_coating_transparent_layer">Transparent polarized coating layer</option>
+                  <option value="choice_two_layers_material">Two layers material</option>
+              </select>
+          </div>
+          </div>
+     `;
+
+    var choice_opaque_simple_layer = `
+        <input type="hidden" name="kind_of_material" value="opaque_simple_layer">
+     `+choice_submit;
+
+	 var choice_transparent_simple_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="pot">Probability of transmission</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="pot" placeholder="Parameter" name="pot">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="transparent_simple_layer">
+     `+choice_submit;
+
+	 var choice_absorber_simple_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="poa">Probability of absorption</label>
+            <input type="text" required="true" class="form-control" id="poa" placeholder="Parameter" name="poa">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="absorber_simple_layer">
+     `+choice_submit;
+
+	 var choice_absorber_lambertian_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="poa">Probability of absorption</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="poa" placeholder="Parameter" name="poa">
+          </div>
+          <div class="form-group">
+            <label for="weight">Lambertian weight of the material</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="weight" value="1.0" name="weight">
+          </div>
+          <div class="form-group">
+            <label for="kind">Lambertian kind of the material:</label><br>
+            <input type="radio" name="kind" value="Total" checked="checked"> Total<br>
+            <input type="radio" name="kind" value="Cosine"> Cosine
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="absorber_lambertian_layer">
+     `+choice_submit;
+
+	 var choice_absorber_TW_model_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="poa">Probability of absorption</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="poa" placeholder="Parameter" name="poa">
+          </div>
+          <div class="form-group">
+            <label for="b_constant">b constant</label>
+            <input type="number" step="any" required="true" class="form-control" id="b_constant" placeholder="Parameter" name="b_constant">
+          </div>
+          <div class="form-group">
+            <label for="c_constant">c constant</label>
+            <input type="number" step="any" required="true" class="form-control" id="c_constant" placeholder="Parameter" name="c_constant">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="absorber_TW_model_layer">
+     `+choice_submit;
+
+     var sigma_block = `
+          <div class="form-group">
+            <label for="sigma_1">sigma_1 [mrad] (leave it empty if no sigma_1 distribution)</label>
+            <input type="number" min="0" max="200" step="any" class="form-control" id="sigma_1" placeholder="Parameter" name="sigma_1">
+          </div>
+          <div class="form-group">
+            <label for="sigma_2">sigma_2 [mrad] (leave it empty if no sigma_2 distribution)</label>
+            <input type="number" min="0" max="200" step="any" class="form-control" id="sigma_2" placeholder="Parameter" name="sigma_2">
+          </div>
+          <div class="form-group">
+            <label for="k">weight for sigma_1 distribution (leave it empty if no sigma_2 distribution)</label>
+            <input type="number" min="0" max="1" step="any"class="form-control" id="k" placeholder="Parameter" name="k">
+          </div>
+     `;
+
+	 var choice_reflector_specular_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="por">Probability of reflection</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="por" placeholder="Parameter" name="por">
+          </div>` + sigma_block + `
+        </div>
+        <input type="hidden" name="kind_of_material" value="reflector_specular_layer">
+     `+choice_submit;
+
+
+	 var choice_reflector_lambertian_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="por">Probability of reflection</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="por" placeholder="Parameter" name="por">
+          </div>
+          <div class="form-group">
+            <label for="weight">Lambertian weight of the material</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="weight" value="1.0" name="weight">
+          </div>
+          <div class="form-group">
+            <label for="kind">Lambertian kind of the material:</label><br>
+            <input type="radio" name="kind" value="Total" checked="checked"> Total<br>
+            <input type="radio" name="kind" value="Cosine"> Cosine
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="reflector_lambertian_layer">
+     `+choice_submit;
+
+	 var choice_metallic_specular_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="ior_file">Refractive index data:</label>
+            <input type="file" required="true" class="form-control-file" id="ior_file" name="ior_file">
+          </div>` + sigma_block + `
+        </div>
+        <input type="hidden" name="kind_of_material" value="metallic_specular_layer">
+     `+choice_submit;
+
+
+
+
+	 var choice_metallic_lambertian_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="ior_file">Refractive index data</label>
+            <input type="file" required="true" class="form-control-file" id="ior_file" name="ior_file">
+          </div>
+          <div class="form-group">
+            <label for="weight">Lambertian weight </label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="weight" value="1.0" name="weight">
+          </div>
+          <div class="form-group">
+            <label for="kind">Lambertian kind</label><br>
+            <input type="radio" name="kind" value="Total" checked="checked"> Total<br>
+            <input type="radio" name="kind" value="Cosine"> Cosine
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="metallic_lambertian_layer">
+     `+choice_submit;
+
+	 var choice_polarized_coating_reflector_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="coating_file">Coating reflector file</label>
+            <input type="file" class="form-control-file" id="coating_file" name="coating_file">
+          </div>` + sigma_block + `
+        </div>
+        <input type="hidden" name="kind_of_material" value="polarized_coating_reflector_layer">
+     `+choice_submit;
+
+	 var choice_polarized_coating_transparent_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="coating_file">Coating transparent file</label>
+            <input type="file" required="true" class="form-control-file" id="coating_file" name="coating_file">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="polarized_coating_transparent_layer">
+     `+choice_submit;
+
+	 var choice_polarized_coating_absorber_layer = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="coating_file">Coating absorber file</label>
+            <input type="file" required="true" class="form-control-file" id="coating_file" name="coating_file">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="polarized_coating_absorber_layer">
+     `+choice_submit;
+
+	 var choice_two_layers_material = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="name">Identifier of material for front layer</label>
+            <input type="text" required="true" class="form-control" id="name_front" placeholder="Name" name="name_front">
+          </div>
+          <div class="form-group">
+            <label for="name">Identifier of material for back layer</label>
+            <input type="text" required="true" class="form-control" id="name_back" placeholder="Name" name="name_back">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="two_layers_material">
+     `+choice_submit;
+
+	 var choice_simple_symmetric_surface = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="por">Probability of reflection</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="por" placeholder="Parameter" name="por">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="simple_symmetric_surface">
+     `+choice_submit;
+
+    var choice_simple_absorber_surface = `
+        <div class="menu">
+          <div class="form-group">
+            <label for="por">Probability of absortion</label>
+            <input type="number" min="0" max="1" step="any" required="true" class="form-control" id="poa" placeholder="Parameter" name="poa">
+          </div>
+        </div>
+        <input type="hidden" name="kind_of_material" value="simple_absorber_surface">
+     `+choice_submit;
+
+    $(document).ready(function(){
+        $("#menus").html(choice1)
+        .on("change","select", function(){
+            let selectedValue = $(this).val();
+            // console.log($(this));
+            $(this).closest(".menu").nextAll().remove();
+            $("#menus").append(window[selectedValue]);
+        });
+    });
+
+
+</script>
+  </body>
+</html>

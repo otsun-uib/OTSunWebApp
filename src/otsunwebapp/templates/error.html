@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Sorry! </h2>
+      We found an error processing your request. Please contact the administrators at
+    <a href="{{ sender }}">{{ sender }}</a>,
+      giving as reference the identifier:<br>
+    {{ identifier }}.
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method=post enctype=multipart/form-data>
+      <div class="form-group">
+        <label for="next_step">Experiment to run:</label><br>
+        <select id="next_step" name="next_step" class="form-control" title="Choose the experiment to run.">
+            <option selected disabled>Choose one</option>
+            <option value="drawing_experiment">Single experiment with plots of rays (single wavelength)</option>
+            <option value="total_analysis">Total analysis (AM1.5 ASTM G-173-03 direct)</option>
+            <option value="spectral_analysis">Spectral analysis (single solar direction)</option>
+            <!-- <option value="single_experiment">Single experiment with plots of rays</option>
+            <option value="multiple_experiment">Batch experiment without plots</option>
+            <option value="spectral_analysis_dummy">Dummy spectral analysis</option> -->
+        </select>
+      </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

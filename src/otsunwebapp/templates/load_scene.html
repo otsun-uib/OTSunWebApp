@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method=post enctype=multipart/form-data>
+        <input type="hidden" name="next_step" value="define_materials">
+        <input type="hidden" name="computation" value="load_materials">
+        <input type="hidden" name="computation_returns_data" value="true">
+        <div class="form-group">
+            <label for="freecad_file">FreeCAD file to process:</label>
+            <input type="file" class="form-control-file" id="freecad_file" name="freecad_file">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

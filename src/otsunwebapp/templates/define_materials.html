@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <p>You must upload a zip file with the .otmaterial files of the following materials:
+    </p>
+
+    Solids:
+<ul>
+    {% for solid in data.solid_material_labels %}
+    <li>
+        {{ solid }}
+    </li>
+    {% endfor %}
+</ul>
+
+    Faces:
+<ul>
+    {% for face in data.faces_material_labels %}
+    <li>
+        {{ face }}
+    </li>
+    {% endfor %}
+</ul>
+
+    <p>
+    You can create these files following this
+    <a href="{{ url_for('material') }}" target="_blank">link</a>
+    </p>
+
+
+    <form method=post enctype=multipart/form-data>
+        <input type="hidden" name="next_step" value="choose_experiment">
+            <div class="form-group">
+            <label for="materials_file">Zip file with the definitions of the materials above:</label>
+            <input type="file" class="form-control-file" id="materials_file" name="materials_file">
+        </div>
+
+    {% if data.scene_has_movement %}
+          <p>The FreeCAD file defines an scene with mobile objects. Do you want them to move with the sun?</p>
+        <div class="form-group">
+          <input type="radio" id="yes" name="move_scene" value="yes" required>
+          <label for="yes">Yes</label><br>
+          <input type="radio" id="no" name="move_scene" value="no">
+          <label for="no">No</label><br>
+        </div>
+    {% endif %}
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

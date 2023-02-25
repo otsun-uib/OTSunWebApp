@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method=post enctype=multipart/form-data>
+        <input type="hidden" name="next_step" value="confirm">
+        <input type="hidden" name="computation" value="single_experiment">
+
+        <div class="form-group">
+            <label for="phis">phi</label>
+            <div class="form-row" id="phis">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Value" id="phi1" name="phi1">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="thetas">theta</label>
+            <div class="form-row" id="thetas">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Value" id="theta1" name="theta1">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lambdas">lambda</label>
+            <div class="form-row" id="lambdas">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Value" id="lambda1" name="lambda1">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="numrays">Number of rays</label>
+            <div class="form-row" id="numrays">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Value" id="numrays" name="numrays">
+                </div>
+            </div>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

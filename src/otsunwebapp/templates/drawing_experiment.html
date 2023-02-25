@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method=post enctype=multipart/form-data>
+        <input type="hidden" name="next_step" value="confirm">
+        <input type="hidden" name="computation" value="drawing_experiment">
+
+        <div class="form-group">
+            <label for="phis">phi (solar azimuth angle; spherical coordinates convention).</label>
+            <div class="form-row" id="phis">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="Value" id="phi" name="phi" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="thetas">theta (solar zenith angle).</label>
+            <div class="form-row" id="thetas">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="Value" id="theta" name="theta" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lambdas">wavelength (in nm).</label>
+            <div class="form-row" id="lambdas">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="Value" id="wavelength" name="wavelength" required>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="numrays">Number of rays to draw.</label>
+            <div class="form-row" id="numrays">
+                <div class="col">
+                    <input type="number" class="form-control" placeholder="Value" id="numrays" name="numrays" required>
+                </div>
+            </div>
+        <small class="form-text text-muted">We recommend 1.000 rays at most.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="aperture_pv">Aperture collector for PV (in mm<sup>2</sup>).</label>
+            <div class="form-row" id="aperture_pv">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="Value" id="aperture_pv" name="aperture_pv">
+                </div>
+            </div>
+        <small class="form-text text-muted">Leave it empty if there are no photovoltaic materials.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="aperture_th">Aperture collector for thermal (in mm<sup>2</sup>).</label>
+            <div class="form-row" id="aperture_th">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="Value" id="aperture_th" name="aperture_th">
+                </div>
+            </div>
+        <small class="form-text text-muted">Leave it empty if there are no absorber thermal materials.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="CSR">Ray distribution from the source: None or Buie model (CSR value).</label>
+            <div class="form-row" id="CSR">
+                <div class="col">
+                    <input type="number" step="any" class="form-control" placeholder="CSR value" id="CSR" name="CSR">
+                </div>
+            </div>
+        <small class="form-text text-muted">Leave it empty if there are no ray distribution.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

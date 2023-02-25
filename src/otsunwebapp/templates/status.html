@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    The current state of your computation with identifier
+    {{ identifier }} is:
+    <br>
+    Status: {{ data_status['status'] }}
+    <br>
+    {% if data_status['status'] == 'running' %}
+        Percentage of computation: {{ data_status['percentage'] }}&#37;
+    {% endif %}
+    <br>
+    {% if data_status['status'] == 'finished' %}
+        Get the results <a href="{{ url_for('send_file', identifier=identifier ) }}">here.</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post">
+        <!-- <input type="hidden" name="next_step" value="a1"> -->
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+        <small id="emailHelp" class="form-text text-muted">We need it to send you the results of the computation. We'll never share your email with anyone else.</small>
+      </div>
+        <input type="hidden" name="next_step" value="load_scene">
+        <!--
+      <div class="form-group">
+        <label for="next_step">Experiment to run:</label><br>
+        <select id="next_step" name="next_step" class="form-control" title="Choose the experiment to run.">
+            <option selected disabled>Choose one</option>
+            <option value="load_scene">Non-trivial Example</option>
+            <option value="experiment1">First Experiment</option>
+            <option value="experiment1par">First Experiment in Parallel</option>
+            <option value="dummy_experiment">Dummy Experiment</option>
+            <option value="dummy_experiment_2">Dummy Experiment number 2</option>
+        </select>
+      </div>
+      -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+    <h2>Powered by:</h2>
+    <a href="https://github.com/bielcardona/OTSun">
+    <img src={{ url_for('static', filename='logo_OTSun.png') }} width="500">
+    </a>
+    <h2>Supported by:</h2>
+    <img src={{ url_for('static', filename='logo2.gif') }} width="500">
+    <img src={{ url_for('static', filename='logo1.jpg') }} width="500">
+
+{% endblock %}

@@ -1,0 +1,9 @@
+version: '2'
+services:
+    otsunwebapp:
+        restart: "no"
+        build: .
+        env_file:
+            - .env
+        ports:
+            - "${PORT}:${PORT}/tcp"
