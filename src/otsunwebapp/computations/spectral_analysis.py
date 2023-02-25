@@ -8,10 +8,11 @@ import otsun
 import numpy as np
 import time
 from multiprocessing import Queue, Process, Manager
-from src.otsunwebapp.utils.statuslogger import StatusLogger
+from otsunwebapp.utils.statuslogger import StatusLogger
+import os
 
 logger = logging.getLogger(__name__)
-N_CPU = 20
+N_CPU = int(os.environ.get('CPU_COUNT', 1))
 MAX_RAYS_PER_COMPUTATION = 50000
 
 

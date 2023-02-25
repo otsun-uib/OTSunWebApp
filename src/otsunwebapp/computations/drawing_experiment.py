@@ -8,7 +8,7 @@ import FreeCAD
 import numpy as np
 import multiprocessing
 from multiprocessing import Process
-from src.otsunwebapp.utils.statuslogger import StatusLogger
+from otsunwebapp.utils.statuslogger import StatusLogger
 
 logger = logging.getLogger(__name__)
 
